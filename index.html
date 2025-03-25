@@ -32,7 +32,8 @@
         }
 
         .column {
-            background: white;
+            background: navy; /* Dark background */
+            color: white; /* White text */
             padding: 15px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -52,7 +53,7 @@
         form {
             margin: 10px auto;
             padding: 10px;
-            background: #f9f9f9;
+            background: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
             border-radius: 5px;
             width: 100%;
             text-align: left;
@@ -73,8 +74,8 @@
         }
 
         button {
-            background-color: darkblue;
-            color: white;
+            background-color: lightblue;
+            color: navy;
             padding: 8px;
             border: none;
             border-radius: 5px;
@@ -83,7 +84,8 @@
         }
 
         button:hover {
-            background-color: navy;
+            background-color: white;
+            color: navy;
         }
 
         /* Learn More Section */
@@ -137,7 +139,21 @@
             <img src="https://www.aerotime.aero/images/airbus_a380_taxiing_at_moscow_air_show_maks_2013-800x500.jpg" alt="Airbus A380 exterior look">
         </div>
 
-        <!-- Column 2: Forms & User Interaction -->
+        <!-- Column 2: Classes & Luxury Experience -->
+        <div class="column">
+            <h2>Classes on the Airbus A380</h2>
+            <ul>
+                <li><strong>First Class</strong> – Private suites, onboard showers.</li>
+                <li><strong>Business Class</strong> – Lie-flat seats, extra space.</li>
+                <li><strong>Premium Economy</strong> – More legroom, better meals.</li>
+                <li><strong>Economy Class</strong> – Spacious seating, quieter cabin.</li>
+            </ul>
+
+            <h3>Luxury menu with caviar in First Class</h3>
+            <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
+        </div>
+
+        <!-- Column 3 (Extreme Right): Questions & User Interaction -->
         <div class="column">
             <h2>Share Your Thoughts</h2>
 
@@ -159,20 +175,6 @@
                 <textarea name="improvements" rows="3" placeholder="Write your suggestions here..."></textarea>
                 <button type="submit">Submit</button>
             </form>
-        </div>
-
-        <!-- Column 3: Classes & Luxury Experience -->
-        <div class="column">
-            <h2>Classes on the Airbus A380</h2>
-            <ul>
-                <li><strong>First Class</strong> – Private suites, onboard showers.</li>
-                <li><strong>Business Class</strong> – Lie-flat seats, extra space.</li>
-                <li><strong>Premium Economy</strong> – More legroom, better meals.</li>
-                <li><strong>Economy Class</strong> – Spacious seating, quieter cabin.</li>
-            </ul>
-
-            <h3>Luxury menu with caviar in First Class</h3>
-            <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
         </div>
     </div>
 
