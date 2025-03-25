@@ -64,10 +64,19 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         button:hover {
             background-color: navy;
+        }
+
+        /* Adjustments for first question form */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -93,8 +102,10 @@
 
         <form>
             <label>Have you ever seen an Airbus A380?</label>
-            <input type="radio" name="seenA380" value="Yes"> Yes
-            <input type="radio" name="seenA380" value="No"> No
+            <div class="radio-group">
+                <label><input type="radio" name="seenA380" value="Yes"> Yes</label>
+                <label><input type="radio" name="seenA380" value="No"> No</label>
+            </div>
             <button type="submit">Submit</button>
         </form>
 
