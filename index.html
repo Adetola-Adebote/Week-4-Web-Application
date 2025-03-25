@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            background-color: #f4f4f4;
         }
 
         /* Header Section */
@@ -18,37 +19,42 @@
             background-color: skyblue;
             padding: 20px;
             text-align: center;
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        /* Content Section */
-        .content {
-            background-color: lightblue;
+        /* Three-Column Layout */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+            gap: 20px;
             padding: 20px;
+        }
+
+        .column {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         /* Images */
         img {
             max-width: 100%;
             height: auto;
-            width: 300px; /* Reduced image size */
+            width: 250px; /* Smaller images */
             display: block;
             margin: 10px auto;
+            border-radius: 5px;
         }
 
-        /* Forms Section */
-        .forms-section {
-            background-color: skyblue;
-            padding: 10px; /* Reduced padding */
-            text-align: center;
-        }
-
+        /* Forms */
         form {
             margin: 10px auto;
             padding: 10px;
-            background: white;
+            background: #f9f9f9;
             border-radius: 5px;
-            width: 90%;
-            max-width: 400px; /* Reduced form width */
+            width: 100%;
             text-align: left;
         }
 
@@ -84,6 +90,7 @@
         .learn-more {
             text-align: center;
             padding: 20px;
+            font-size: 18px;
         }
 
         .learn-more a {
@@ -95,6 +102,19 @@
         .learn-more a:hover {
             text-decoration: underline;
         }
+
+        /* Responsive Design */
+        @media screen and (max-width: 900px) {
+            .container {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                grid-template-columns: 1fr; /* 1 column for small screens */
+            }
+        }
     </style>
 </head>
 <body>
@@ -102,52 +122,58 @@
         <h1>Welcome to My Webpage</h1>
     </div>
 
-    <div class="content">
-        <h2>About Me</h2>
-        <p>Hi, my name is Adetola, and I have a deep passion for technology and aviation...</p>
+    <!-- Three-Column Layout -->
+    <div class="container">
+        
+        <!-- Column 1: About Airbus A380 -->
+        <div class="column">
+            <h2>About Me</h2>
+            <p>Hi, my name is Adetola, and I have a deep passion for technology and aviation...</p>
 
-        <h2>Why I Love the Airbus A380</h2>
-        <p>The Airbus A380 is the world's largest passenger aircraft...</p>
+            <h2>Why I Love the Airbus A380</h2>
+            <p>The Airbus A380 is the world's largest passenger aircraft...</p>
 
-        <h3>Here is Airbus A380 exterior look</h3>
-        <img src="https://www.aerotime.aero/images/airbus_a380_taxiing_at_moscow_air_show_maks_2013-800x500.jpg" alt="Airbus A380 exterior look">
-    </div>
+            <h3>Here is Airbus A380 exterior look</h3>
+            <img src="https://www.aerotime.aero/images/airbus_a380_taxiing_at_moscow_air_show_maks_2013-800x500.jpg" alt="Airbus A380 exterior look">
+        </div>
 
-    <!-- Forms Section -->
-    <div class="forms-section">
-        <h2>Share Your Thoughts on the Airbus A380</h2>
+        <!-- Column 2: Forms & User Interaction -->
+        <div class="column">
+            <h2>Share Your Thoughts</h2>
 
-        <form>
-            <label>Have you ever seen an Airbus A380?</label>
-            <input type="radio" name="seenA380" value="Yes"> Yes <br>
-            <input type="radio" name="seenA380" value="No"> No <br>
-            <button type="submit">Submit</button> 
-        </form>
+            <form>
+                <label>Have you ever seen an Airbus A380?</label>
+                <input type="radio" name="seenA380" value="Yes"> Yes <br>
+                <input type="radio" name="seenA380" value="No"> No <br>
+                <button type="submit">Submit</button> 
+            </form>
 
-        <form>
-            <label>Why would you like to fly in an Airbus A380?</label>
-            <textarea name="whyFly" rows="3" placeholder="Write your reason here..."></textarea>
-            <button type="submit">Submit</button>
-        </form>
+            <form>
+                <label>Why would you like to fly in an Airbus A380?</label>
+                <textarea name="whyFly" rows="3" placeholder="Write your reason here..."></textarea>
+                <button type="submit">Submit</button>
+            </form>
 
-        <form>
-            <label>What improvement would you suggest for the Airbus A380?</label>
-            <textarea name="improvements" rows="3" placeholder="Write your suggestions here..."></textarea>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
+            <form>
+                <label>What improvement would you suggest for the Airbus A380?</label>
+                <textarea name="improvements" rows="3" placeholder="Write your suggestions here..."></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
 
-    <div class="content">
-        <h2>Classes on the Airbus A380</h2>
-        <ul>
-            <li><strong>First Class</strong> – Private suites, onboard showers.</li>
-            <li><strong>Business Class</strong> – Lie-flat seats, extra space.</li>
-            <li><strong>Premium Economy</strong> – More legroom, better meals.</li>
-            <li><strong>Economy Class</strong> – Spacious seating, quieter cabin.</li>
-        </ul>
+        <!-- Column 3: Classes & Luxury Experience -->
+        <div class="column">
+            <h2>Classes on the Airbus A380</h2>
+            <ul>
+                <li><strong>First Class</strong> – Private suites, onboard showers.</li>
+                <li><strong>Business Class</strong> – Lie-flat seats, extra space.</li>
+                <li><strong>Premium Economy</strong> – More legroom, better meals.</li>
+                <li><strong>Economy Class</strong> – Spacious seating, quieter cabin.</li>
+            </ul>
 
-        <h3>Here is an interior look of a luxury menu with caviar in First Class</h3>
-        <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
+            <h3>Luxury menu with caviar in First Class</h3>
+            <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
+        </div>
     </div>
 
     <!-- Learn More Section -->
