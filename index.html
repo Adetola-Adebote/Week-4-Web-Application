@@ -26,20 +26,29 @@
             padding: 20px;
         }
 
+        /* Images */
+        img {
+            max-width: 100%;
+            height: auto;
+            width: 300px; /* Reduced image size */
+            display: block;
+            margin: 10px auto;
+        }
+
         /* Forms Section */
         .forms-section {
             background-color: skyblue;
-            padding: 20px;
+            padding: 10px; /* Reduced padding */
             text-align: center;
         }
 
         form {
-            margin: 15px auto;
-            padding: 15px;
+            margin: 10px auto;
+            padding: 10px;
             background: white;
             border-radius: 5px;
-            width: 80%;
-            max-width: 500px;
+            width: 90%;
+            max-width: 400px; /* Reduced form width */
             text-align: left;
         }
 
@@ -51,8 +60,8 @@
 
         input, textarea {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 8px;
+            margin-bottom: 8px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -60,23 +69,31 @@
         button {
             background-color: darkblue;
             color: white;
-            padding: 10px;
+            padding: 8px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
+            width: 100%;
         }
 
         button:hover {
             background-color: navy;
         }
 
-        /* Adjustments for first question form */
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            margin-bottom: 10px;
+        /* Learn More Section */
+        .learn-more {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .learn-more a {
+            color: darkblue;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .learn-more a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -102,22 +119,20 @@
 
         <form>
             <label>Have you ever seen an Airbus A380?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="seenA380" value="Yes"> Yes</label>
-                <label><input type="radio" name="seenA380" value="No"> No</label>
-            </div>
-            <button type="submit">Submit</button>
+            <input type="radio" name="seenA380" value="Yes"> Yes <br>
+            <input type="radio" name="seenA380" value="No"> No <br>
+            <button type="submit">Submit</button> 
         </form>
 
         <form>
             <label>Why would you like to fly in an Airbus A380?</label>
-            <textarea name="whyFly" rows="4" placeholder="Write your reason here..."></textarea>
+            <textarea name="whyFly" rows="3" placeholder="Write your reason here..."></textarea>
             <button type="submit">Submit</button>
         </form>
 
         <form>
             <label>What improvement would you suggest for the Airbus A380?</label>
-            <textarea name="improvements" rows="4" placeholder="Write your suggestions here..."></textarea>
+            <textarea name="improvements" rows="3" placeholder="Write your suggestions here..."></textarea>
             <button type="submit">Submit</button>
         </form>
     </div>
@@ -133,6 +148,12 @@
 
         <h3>Here is an interior look of a luxury menu with caviar in First Class</h3>
         <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
+    </div>
+
+    <!-- Learn More Section -->
+    <div class="learn-more">
+        <h2>Learn More</h2>
+        <p>If you’d like to know more about the Airbus A380, check out the <a href="https://www.airbus.com/en/products-services/commercial-aircraft/passenger-aircraft/a380" target="_blank">official Airbus page</a>.</p>
     </div>
 </body>
 </html>
