@@ -32,8 +32,8 @@
         }
 
         .column {
-            background: navy; /* Dark background */
-            color: white; /* White text */
+            background: navy;
+            color: white;
             padding: 15px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -43,7 +43,7 @@
         img {
             max-width: 100%;
             height: auto;
-            width: 250px; /* Smaller images */
+            width: 250px;
             display: block;
             margin: 10px auto;
             border-radius: 5px;
@@ -53,7 +53,7 @@
         form {
             margin: 10px auto;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 5px;
             width: 100%;
             text-align: left;
@@ -88,33 +88,22 @@
             color: navy;
         }
 
-        /* Learn More Section */
-        .learn-more {
-            text-align: center;
-            padding: 20px;
-            font-size: 18px;
-        }
-
-        .learn-more a {
-            color: darkblue;
+        .response {
+            margin-top: 10px;
             font-weight: bold;
-            text-decoration: none;
-        }
-
-        .learn-more a:hover {
-            text-decoration: underline;
+            color: yellow;
         }
 
         /* Responsive Design */
         @media screen and (max-width: 900px) {
             .container {
-                grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media screen and (max-width: 600px) {
             .container {
-                grid-template-columns: 1fr; /* 1 column for small screens */
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -126,14 +115,13 @@
 
     <!-- Three-Column Layout -->
     <div class="container">
-        
         <!-- Column 1: About Airbus A380 -->
         <div class="column">
             <h2>About Me</h2>
-            <p>Hi, my name is Adetola, and I have a deep passion for technology and aviation. My journey has taken me through various industries—from agricultural economics to accounting, construction, and now cloud computing. While my professional focus is on cloud infrastructure, I have always been fascinated by aircraft engineering, particularly the Airbus A380.</p>
+            <p>Hi, my name is Adetola, and I have a deep passion for technology and aviation...</p>
 
             <h2>Why I Love the Airbus A380</h2>
-            <p>The Airbus A380 is the world's largest passenger aircraft, known for its double-deck design and advanced engineering. It can carry over 800 passengers and offers an unmatched flying experience. The level of precision and innovation required to build such an aircraft reminds me of the complexity of cloud computing—both involve intricate systems working together seamlessly.</p>
+            <p>The Airbus A380 is the world's largest passenger aircraft...</p>
 
             <h3>Here is Airbus A380 exterior look</h3>
             <img src="https://www.aerotime.aero/images/airbus_a380_taxiing_at_moscow_air_show_maks_2013-800x500.jpg" alt="Airbus A380 exterior look">
@@ -153,35 +141,74 @@
             <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
         </div>
 
-        <!-- Column 3 (Extreme Right): Questions & User Interaction -->
+        <!-- Column 3: Questions & User Interaction -->
         <div class="column">
             <h2>Share Your Thoughts</h2>
 
-            <form>
+            <form id="seenA380Form">
                 <label>Have you ever seen an Airbus A380?</label>
                 <input type="radio" name="seenA380" value="Yes"> Yes <br>
                 <input type="radio" name="seenA380" value="No"> No <br>
-                <button type="submit">Submit</button> 
+                <button type="button" onclick="checkSeenA380()">Submit</button>
+                <p class="response" id="seenResponse"></p>
             </form>
 
-            <form>
+            <form id="whyFlyForm">
                 <label>Why would you like to fly in an Airbus A380?</label>
-                <textarea name="whyFly" rows="3" placeholder="Write your reason here..."></textarea>
-                <button type="submit">Submit</button>
+                <textarea name="whyFly" id="whyFly" rows="3" placeholder="Write your reason here..."></textarea>
+                <button type="button" onclick="checkWhyFly()">Submit</button>
+                <p class="response" id="whyFlyResponse"></p>
             </form>
 
-            <form>
+            <form id="improvementsForm">
                 <label>What improvement would you suggest for the Airbus A380?</label>
-                <textarea name="improvements" rows="3" placeholder="Write your suggestions here..."></textarea>
-                <button type="submit">Submit</button>
+                <textarea name="improvements" id="improvements" rows="3" placeholder="Write your suggestions here..."></textarea>
+                <button type="button" onclick="checkImprovements()">Submit</button>
+                <p class="response" id="improvementsResponse"></p>
             </form>
         </div>
     </div>
 
-    <!-- Learn More Section -->
     <div class="learn-more">
         <h2>Learn More</h2>
         <p>If you’d like to know more about the Airbus A380, check out the <a href="https://www.airbus.com/en/products-services/commercial-aircraft/passenger-aircraft/a380" target="_blank">official Airbus page</a>.</p>
     </div>
+
+    <script>
+        function checkSeenA380() {
+            let response = document.getElementById("seenResponse");
+            let selected = document.querySelector('input[name="seenA380"]:checked');
+            
+            if (selected) {
+                response.textContent = selected.value === "Yes" 
+                    ? "It is great that you have ever seen the world's largest passenger aircraft." 
+                    : "No worries! Hope you see one someday, it is a phenomenal aircraft.";
+            } else {
+                response.textContent = "Please select an option.";
+            }
+        }
+
+        function checkWhyFly() {
+            let textArea = document.getElementById("whyFly");
+            let response = document.getElementById("whyFlyResponse");
+            
+            if (textArea.value.trim() === "") {
+                response.textContent = "Please share your reason for flying in an Airbus A380.";
+            } else {
+                response.textContent = "That sounds like a fantastic reason! Thank you for your response.";
+            }
+        }
+
+        function checkImprovements() {
+            let textArea = document.getElementById("improvements");
+            let response = document.getElementById("improvementsResponse");
+
+            if (textArea.value.trim() === "") {
+                response.textContent = "We would love to hear your thoughts! Please share any improvements you’d like to see.";
+            } else {
+                response.textContent = "Thank you for your suggestion! Airbus is always looking for ways to improve passenger experience.";
+            }
+        }
+    </script>
 </body>
 </html>
