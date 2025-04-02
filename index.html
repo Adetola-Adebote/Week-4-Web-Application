@@ -49,7 +49,7 @@
             width: 100%;
             text-align: left;
         }
-        input, textarea, select {
+        input, textarea {
             width: 100%;
             padding: 8px;
             margin-bottom: 8px;
@@ -82,6 +82,17 @@
             color: #0066cc;
             text-decoration: underline;
         }
+        /* Weather Section */
+        .weather-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .weather-info {
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
@@ -109,55 +120,57 @@
             <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
         </div>
         <div class="column">
-            <h2>Flight Routes of the Airbus A380</h2>
-            <form id="flightRoutesForm">
-                <label for="departure">Departure Airport:</label>
-                <select id="departure">
-                    <option value="DXB">Dubai (DXB)</option>
-                    <option value="LHR">London Heathrow (LHR)</option>
-                    <option value="JFK">New York (JFK)</option>
-                </select>
-                <label for="arrival">Arrival Airport:</label>
-                <select id="arrival">
-                    <option value="SIN">Singapore (SIN)</option>
-                    <option value="SYD">Sydney (SYD)</option>
-                    <option value="LAX">Los Angeles (LAX)</option>
-                </select>
-                <button type="button" onclick="fetchFlightRoutes()">Find Routes</button>
+            <h2>Weather Information</h2>
+            <form id="weather-form">
+                <label for="city-name">Enter a City Name:</label>
+                <input type="text" id="city-name" placeholder="Enter city name" required>
+                <button type="submit">Get Weather</button>
             </form>
-            <p id="routesResult"></p>
-        </div>
-        <div class="column">
-            <h2>Share Your Thoughts</h2>
-            <form>
-                <label>Have you ever seen an Airbus A380?</label>
-                <input type="radio" name="seenA380" value="Yes" onclick="updateSeenResponse(this.value)"> Yes <br>
-                <input type="radio" name="seenA380" value="No" onclick="updateSeenResponse(this.value)"> No <br>
-                <p class="response" id="seenResponse"></p>
-            </form>
-            <form>
-                <label>Why would you like to fly in an Airbus A380?</label>
-                <textarea id="whyFly" oninput="showTyping('whyFlyResponse')"></textarea>
-                <button type="button" onclick="submitWhyFly()">Submit</button>
-                <p class="response" id="whyFlyResponse"></p>
-            </form>
-            <form>
-                <label>What features excite you the most about the Airbus A380?</label>
-                <textarea id="exciteFeatures"></textarea>
-                <button type="button">Submit</button>
-            </form>
+            <div class="weather-section" id="weather-info">
+                <p class="weather-info" id="city-weather"></p>
+                <p class="weather-info" id="temp-info"></p>
+                <p class="weather-info" id="error-info" style="color: red;"></p>
+            </div>
         </div>
     </div>
+
+    <!-- Learn More Section -->
     <div class="learn-more">
-        <p><a href="https://www.airbus.com/en/products-services/commercial-aircraft/passenger-aircraft/a380" target="_blank">Learn more about the Airbus A380</a></p>
+        <p>If you would like to know more about the Airbus A380, <a href="https://www.airbus.com/en/products-services/commercial-aircraft/passenger-aircraft/a380" target="_blank"><u>click here</u></a> to visit its official page.</p>
     </div>
+
     <script>
-        function fetchFlightRoutes() {
-            document.getElementById("routesResult").textContent = "Fetching flight routes...";
-            setTimeout(() => {
-                document.getElementById("routesResult").textContent = "Example route: Dubai (DXB) to London (LHR) - 7 hours 30 minutes";
-            }, 2000);
-        }
+        // OpenWeatherMap API Key and Endpoint
+        const apiKey = "8504bed2ab274529e038b480a54c3b5b";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?";
+
+        // Handle form submission
+        document.getElementById("weather-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const cityName = document.getElementById("city-name").value.trim();
+
+            if (cityName) {
+                // Call the API
+                fetch(`${apiUrl}q=${cityName}&appid=${apiKey}&units=metric`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.cod === "404") {
+                            document.getElementById("error-info").textContent = "City not found. Please try again.";
+                        } else {
+                            const city = data.name;
+                            const temp = data.main.temp;
+                            const weatherDescription = data.weather[0].description;
+                            document.getElementById("city-weather").textContent = `Weather in ${city}: ${weatherDescription}`;
+                            document.getElementById("temp-info").textContent = `Temperature: ${temp}°C`;
+                            document.getElementById("error-info").textContent = "";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching weather data:", error);
+                        document.getElementById("error-info").textContent = "Failed to retrieve weather data. Please try again later.";
+                    });
+            }
+        });
     </script>
 </body>
 </html>
