@@ -33,14 +33,6 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        img {
-            max-width: 100%;
-            height: auto;
-            width: 250px;
-            display: block;
-            margin: 10px auto;
-            border-radius: 5px;
-        }
         form {
             margin: 10px auto;
             padding: 10px;
@@ -49,21 +41,17 @@
             width: 100%;
             text-align: left;
         }
-        input, textarea {
+        select, button {
             width: 100%;
             padding: 8px;
-            margin-bottom: 8px;
+            margin-top: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
         button {
             background-color: lightblue;
             color: navy;
-            padding: 8px;
-            border: none;
-            border-radius: 5px;
             cursor: pointer;
-            width: 100%;
         }
         button:hover {
             background-color: white;
@@ -78,56 +66,37 @@
             text-align: center;
             margin-top: 30px;
         }
-        .learn-more a {
-            color: #0066cc;
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
     <div class="intro">
         <h1>Airbus A380: The World's Largest Passenger Aircraft</h1>
     </div>
+    
+    <!-- New Flight Routes Section -->
     <div class="container">
         <div class="column">
-            <h2>About Me</h2>
-            <p>Hi, my name is Adetola, and I have a deep passion for technology and aviation. My journey has taken me through various industries—from agricultural economics to accounting, construction, and now cloud computing. While my professional focus is on cloud infrastructure, I have always been fascinated by aircraft engineering, particularly the Airbus A380.</p>
-            <h2>Why I Love the Airbus A380</h2>
-            <p>The Airbus A380 is the world's largest passenger aircraft, known for its double-deck design and advanced engineering. It can carry over 800 passengers and offers an unmatched flying experience. The level of precision and innovation required to build such an aircraft reminds me of the complexity of cloud computing—both involve intricate systems working together seamlessly.</p>
-            <h3>Here is Airbus A380 exterior look</h3>
-            <img src="https://www.aerotime.aero/images/airbus_a380_taxiing_at_moscow_air_show_maks_2013-800x500.jpg" alt="Airbus A380 exterior look">
-        </div>
-        <div class="column">
-            <h2>Classes on the Airbus A380</h2>
-            <ul>
-                <li>First Class – Private suites</li>
-                <li>Business Class – Lie-flat seats</li>
-                <li>Premium Economy – More legroom</li>
-                <li>Economy Class – Spacious seating</li>
-            </ul>
-            <h3>Luxury menu with caviar in First Class</h3>
-            <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
-        </div>
-        <div class="column">
-            <h2>Share Your Thoughts</h2>
+            <h2>Explore Popular Airbus A380 Flight Routes</h2>
+            <p>Discover the most popular routes for Airbus A380 flights. Select a route and view its details, including departure and arrival airports, flight duration, and distance.</p>
             <form>
-                <label>Have you ever seen an Airbus A380?</label>
-                <input type="radio" name="seenA380" value="Yes" onclick="updateSeenResponse(this.value)"> Yes <br>
-                <input type="radio" name="seenA380" value="No" onclick="updateSeenResponse(this.value)"> No <br>
-                <p class="response" id="seenResponse"></p>
+                <label for="departureAirport">Departure Airport:</label>
+                <select id="departureAirport">
+                    <option value="LHR">London Heathrow (LHR)</option>
+                    <option value="JFK">New York JFK (JFK)</option>
+                    <option value="DXB">Dubai International (DXB)</option>
+                </select>
+                <label for="arrivalAirport">Arrival Airport:</label>
+                <select id="arrivalAirport">
+                    <option value="SYD">Sydney Kingsford Smith (SYD)</option>
+                    <option value="HKG">Hong Kong International (HKG)</option>
+                    <option value="SIN">Singapore Changi (SIN)</option>
+                </select>
+                <button type="button" onclick="fetchFlightRouteData()">Search Flights</button>
             </form>
-            <form>
-                <label>Why would you like to fly in an Airbus A380?</label>
-                <textarea id="whyFly" oninput="showTyping('whyFlyResponse')"></textarea>
-                <button type="button" onclick="submitWhyFly()">Submit</button>
-                <p class="response" id="whyFlyResponse"></p>
-            </form>
-            <form>
-                <label>What improvement would you suggest for the Airbus A380?</label>
-                <textarea id="improvements" oninput="showTyping('improvementsResponse')"></textarea>
-                <button type="button" onclick="submitImprovements()">Submit</button>
-                <p class="response" id="improvementsResponse"></p>
-            </form>
+            <div id="flightDetails">
+                <h3>Flight Details</h3>
+                <p id="routeInfo">Select a route to see details.</p>
+            </div>
         </div>
     </div>
 
@@ -137,26 +106,26 @@
     </div>
 
     <script>
-        function updateSeenResponse(value) {
-            document.getElementById("seenResponse").textContent = value === "Yes" 
-                ? "It is great that you have seen the Airbus A380!" 
-                : "No worries! Hope you see one someday, it's a phenomenal aircraft.";
-        }
-
-        function showTyping(responseId) {
-            document.getElementById(responseId).textContent = "typing...";
-        }
-
-        function submitWhyFly() {
-            let response = document.getElementById("whyFlyResponse");
-            let text = document.getElementById("whyFly").value.trim();
-            response.textContent = text ? "Great reason!" : "Please share your reason.";
-        }
-
-        function submitImprovements() {
-            let response = document.getElementById("improvementsResponse");
-            let text = document.getElementById("improvements").value.trim();
-            response.textContent = text ? "Thank you for your suggestion!" : "We’d love to hear your suggestions.";
+        function fetchFlightRouteData() {
+            let departure = document.getElementById("departureAirport").value;
+            let arrival = document.getElementById("arrivalAirport").value;
+            
+            let routes = {
+                "LHR-SYD": { duration: "22 hours", distance: "17,000 km" },
+                "JFK-HKG": { duration: "16 hours", distance: "13,000 km" },
+                "DXB-SIN": { duration: "7 hours", distance: "6,100 km" }
+            };
+            
+            let routeKey = `${departure}-${arrival}`;
+            let routeDetails = routes[routeKey];
+            
+            if (routeDetails) {
+                document.getElementById("routeInfo").innerHTML = `<strong>Route:</strong> ${departure} to ${arrival}<br>
+                <strong>Flight Duration:</strong> ${routeDetails.duration}<br>
+                <strong>Distance:</strong> ${routeDetails.distance}`;
+            } else {
+                document.getElementById("routeInfo").textContent = "No data available for this route.";
+            }
         }
     </script>
 </body>
