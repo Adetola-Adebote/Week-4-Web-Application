@@ -74,6 +74,14 @@
             font-weight: bold;
             color: yellow;
         }
+        .learn-more {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .learn-more a {
+            color: #0066cc;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -122,6 +130,12 @@
             </form>
         </div>
     </div>
+
+    <!-- Learn More Section -->
+    <div class="learn-more">
+        <p>If you would like to know more about the Airbus A380, <a href="https://www.airbus.com/en/products-services/commercial-aircraft/passenger-aircraft/a380" target="_blank"><u>click here</u></a> to visit its official page.</p>
+    </div>
+
     <script>
         function updateSeenResponse(value) {
             document.getElementById("seenResponse").textContent = value === "Yes" 
