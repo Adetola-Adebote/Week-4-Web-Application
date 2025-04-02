@@ -82,16 +82,10 @@
             color: #0066cc;
             text-decoration: underline;
         }
-        /* Weather Section */
-        .weather-section {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .weather-info {
-            margin-top: 15px;
+        #weatherResponse {
+            margin-top: 20px;
+            font-size: 18px;
+            color: darkgreen;
         }
     </style>
 </head>
@@ -120,17 +114,30 @@
             <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
         </div>
         <div class="column">
-            <h2>Weather Information</h2>
-            <form id="weather-form">
-                <label for="city-name">Enter a City Name:</label>
-                <input type="text" id="city-name" placeholder="Enter city name" required>
-                <button type="submit">Get Weather</button>
+            <h2>Share Your Thoughts</h2>
+            <form>
+                <label>Have you ever seen an Airbus A380?</label>
+                <input type="radio" name="seenA380" value="Yes" onclick="updateSeenResponse(this.value)"> Yes <br>
+                <input type="radio" name="seenA380" value="No" onclick="updateSeenResponse(this.value)"> No <br>
+                <p class="response" id="seenResponse"></p>
             </form>
-            <div class="weather-section" id="weather-info">
-                <p class="weather-info" id="city-weather"></p>
-                <p class="weather-info" id="temp-info"></p>
-                <p class="weather-info" id="error-info" style="color: red;"></p>
-            </div>
+            <form>
+                <label>Why would you like to fly in an Airbus A380?</label>
+                <textarea id="whyFly" oninput="showTyping('whyFlyResponse')"></textarea>
+                <button type="button" onclick="submitWhyFly()">Submit</button>
+                <p class="response" id="whyFlyResponse"></p>
+            </form>
+            <form>
+                <label>What improvement would you suggest for the Airbus A380?</label>
+                <textarea id="improvements" oninput="showTyping('improvementsResponse')"></textarea>
+                <button type="button" onclick="submitImprovements()">Submit</button>
+                <p class="response" id="improvementsResponse"></p>
+            </form>
+            <!-- Weather form -->
+            <h2>Check the Weather</h2>
+            <input type="text" id="city" placeholder="Enter city">
+            <button type="button" onclick="getWeather()">Get Weather</button>
+            <div id="weatherResponse"></div>
         </div>
     </div>
 
@@ -140,37 +147,65 @@
     </div>
 
     <script>
-        // OpenWeatherMap API Key and Endpoint
-        const apiKey = "8504bed2ab274529e038b480a54c3b5b";
-        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?";
+        // Function to fetch weather data from OpenWeatherMap API
+        function getWeather() {
+            var city = document.getElementById("city").value;
+            var apiKey = "878f6bbb60d3c057a1bb2580f40bf947";  // New API Key
 
-        // Handle form submission
-        document.getElementById("weather-form").addEventListener("submit", function (event) {
-            event.preventDefault();
-            const cityName = document.getElementById("city-name").value.trim();
+            // OpenWeatherMap API URL
+            var url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-            if (cityName) {
-                // Call the API
-                fetch(`${apiUrl}q=${cityName}&appid=${apiKey}&units=metric`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.cod === "404") {
-                            document.getElementById("error-info").textContent = "City not found. Please try again.";
-                        } else {
-                            const city = data.name;
-                            const temp = data.main.temp;
-                            const weatherDescription = data.weather[0].description;
-                            document.getElementById("city-weather").textContent = `Weather in ${city}: ${weatherDescription}`;
-                            document.getElementById("temp-info").textContent = `Temperature: ${temp}°C`;
-                            document.getElementById("error-info").textContent = "";
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error fetching weather data:", error);
-                        document.getElementById("error-info").textContent = "Failed to retrieve weather data. Please try again later.";
-                    });
-            }
-        });
+            // Fetch weather data
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Check if response has weather data
+                    if (data.cod === 200) {
+                        // Extract weather information
+                        var temperature = data.main.temp;
+                        var description = data.weather[0].description;
+                        var icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+
+                        // Display weather data
+                        document.getElementById("weatherResponse").innerHTML = `
+                            <h3>Weather in ${city}</h3>
+                            <img src="${icon}" alt="Weather icon">
+                            <p>Temperature: ${temperature}°C</p>
+                            <p>Description: ${description}</p>
+                        `;
+                    } else {
+                        // Handle error (city not found, etc.)
+                        document.getElementById("weatherResponse").innerHTML = `Failed to retrieve weather data for ${city}. Please try again.`;
+                    }
+                })
+                .catch(error => {
+                    // Handle fetch errors (network, API issues, etc.)
+                    document.getElementById("weatherResponse").innerHTML = "Failed to retrieve weather data. Please try again later.";
+                    console.error("Error fetching weather data:", error);  // Log the error to the console
+                });
+        }
+
+        function updateSeenResponse(value) {
+            document.getElementById("seenResponse").textContent = value === "Yes" 
+                ? "It is great that you have seen the Airbus A380!" 
+                : "No worries! Hope you see one someday, it's a phenomenal aircraft.";
+        }
+
+        function showTyping(responseId) {
+            document.getElementById(responseId).textContent = "typing...";
+        }
+
+        function submitWhyFly() {
+            let response = document.getElementById("whyFlyResponse");
+            let text = document.getElementById("whyFly").value.trim();
+            response.textContent = text ? "Great reason!" : "Please share your reason.";
+        }
+
+        function submitImprovements() {
+            let response = document.getElementById("improvementsResponse");
+            let text = document.getElementById("improvements").value.trim();
+            response.textContent = text ? "Thank you for your suggestion!" : "We’d love to hear your suggestions.";
+        }
     </script>
 </body>
 </html>
