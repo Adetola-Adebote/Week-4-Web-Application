@@ -74,6 +74,12 @@
             font-weight: bold;
             color: yellow;
         }
+        .stats {
+            background-color: lightgray;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -83,7 +89,7 @@
     <div class="container">
         <div class="column">
             <h2>About Me</h2>
-            <p>Hi, my name is Adetola, and I have a deep passion for technology and aviation. My journey has taken me through various industries—from agricultural economics to accounting, construction, and now cloud computing. While my professional focus is on cloud infrastructure, I have always been fascinated by aircraft engineering, particularly the Airbus A380.</p>
+            <p>Hi, my name is Adetola, and I love aviation and technology...</p>
             <h2>Why I Love the Airbus A380</h2>
             <p>The Airbus A380 is the world's largest passenger aircraft, known for its double-deck design and advanced engineering. It can carry over 800 passengers and offers an unmatched flying experience. The level of precision and innovation required to build such an aircraft reminds me of the complexity of cloud computing—both involve intricate systems working together seamlessly.</p>
             <h3>Here is Airbus A380 exterior look</h3>
@@ -122,6 +128,13 @@
             </form>
         </div>
     </div>
+
+    <!-- Airbus A380 Statistics Section -->
+    <div class="stats">
+        <h2>Airbus A380 Global Statistics</h2>
+        <p id="flightStats">Loading Airbus A380 flight statistics...</p>
+    </div>
+
     <script>
         function updateSeenResponse(value) {
             document.getElementById("seenResponse").textContent = value === "Yes" 
@@ -144,6 +157,31 @@
             let text = document.getElementById("improvements").value.trim();
             response.textContent = text ? "Thank you for your suggestion!" : "We’d love to hear your suggestions.";
         }
+
+        // Fetch Airbus A380 statistics from API
+        async function fetchA380Stats() {
+            const response = await fetch('https://opensky-network.org/api/states/all');
+            const data = await response.json();
+
+            let totalA380s = 0;
+            let totalFlightsToday = 0;
+
+            data.states.forEach(flight => {
+                if (flight[7] && flight[7].includes("A380")) { // Check if flight is an Airbus A380
+                    totalA380s++;
+                    totalFlightsToday++;
+                }
+            });
+
+            // Display the stats
+            document.getElementById('flightStats').innerHTML = `
+                <strong>Total Airbus A380s in operation:</strong> ${totalA380s} <br>
+                <strong>Number of Airbus A380 flights today:</strong> ${totalFlightsToday} <br>
+            `;
+        }
+
+        // Call the function when page loads
+        window.onload = fetchA380Stats;
     </script>
 </body>
 </html>
