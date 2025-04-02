@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adetola's Webpage</title>
     <style>
+        /* Global Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -12,7 +13,6 @@
             line-height: 1.6;
             background-color: #f4f4f4;
         }
-
         .intro {
             background-color: skyblue;
             padding: 20px;
@@ -20,14 +20,12 @@
             font-size: 24px;
             font-weight: bold;
         }
-
         .container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             padding: 20px;
         }
-
         .column {
             background: navy;
             color: white;
@@ -35,7 +33,6 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
         img {
             max-width: 100%;
             height: auto;
@@ -44,7 +41,6 @@
             margin: 10px auto;
             border-radius: 5px;
         }
-
         form {
             margin: 10px auto;
             padding: 10px;
@@ -53,13 +49,6 @@
             width: 100%;
             text-align: left;
         }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
         input, textarea {
             width: 100%;
             padding: 8px;
@@ -67,7 +56,6 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-
         button {
             background-color: lightblue;
             color: navy;
@@ -77,12 +65,10 @@
             cursor: pointer;
             width: 100%;
         }
-
         button:hover {
             background-color: white;
             color: navy;
         }
-
         .response {
             margin-top: 10px;
             font-weight: bold;
@@ -94,69 +80,68 @@
     <div class="intro">
         <h1>Airbus A380: The World's Largest Passenger Aircraft</h1>
     </div>
-
     <div class="container">
         <div class="column">
             <h2>About Me</h2>
-            <p>Hi, my name is Adetola, and I have a deep passion for technology and aviation...</p>
+            <p>Hi, my name is Adetola, and I love aviation and technology...</p>
             <h3>Here is Airbus A380 exterior look</h3>
-            <img src="https://www.aerotime.aero/images/airbus_a380_taxiing.jpg" alt="Airbus A380">
+            <img src="https://www.aerotime.aero/images/airbus_a380_taxiing_at_moscow_air_show_maks_2013-800x500.jpg" alt="Airbus A380 exterior look">
         </div>
-
         <div class="column">
             <h2>Classes on the Airbus A380</h2>
             <ul>
-                <li><strong>First Class</strong> – Private suites, onboard showers.</li>
-                <li><strong>Business Class</strong> – Lie-flat seats, extra space.</li>
-                <li><strong>Premium Economy</strong> – More legroom, better meals.</li>
-                <li><strong>Economy Class</strong> – Spacious seating, quieter cabin.</li>
+                <li>First Class – Private suites</li>
+                <li>Business Class – Lie-flat seats</li>
+                <li>Premium Economy – More legroom</li>
+                <li>Economy Class – Spacious seating</li>
             </ul>
+            <h3>Luxury menu with caviar in First Class</h3>
+            <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
         </div>
-
         <div class="column">
             <h2>Share Your Thoughts</h2>
-            <form id="seenA380Form">
+            <form>
                 <label>Have you ever seen an Airbus A380?</label>
-                <input type="radio" name="seenA380" value="Yes" onclick="checkSeenA380()"> Yes <br>
-                <input type="radio" name="seenA380" value="No" onclick="checkSeenA380()"> No <br>
+                <input type="radio" name="seenA380" value="Yes" onclick="updateSeenResponse(this.value)"> Yes <br>
+                <input type="radio" name="seenA380" value="No" onclick="updateSeenResponse(this.value)"> No <br>
                 <p class="response" id="seenResponse"></p>
             </form>
-
-            <form id="whyFlyForm">
+            <form>
                 <label>Why would you like to fly in an Airbus A380?</label>
-                <textarea name="whyFly" id="whyFly" rows="3" placeholder="Write your reason here..."></textarea>
+                <textarea id="whyFly" oninput="showTyping('whyFlyResponse')"></textarea>
+                <button type="button" onclick="submitWhyFly()">Submit</button>
                 <p class="response" id="whyFlyResponse"></p>
             </form>
-
-            <form id="improvementsForm">
+            <form>
                 <label>What improvement would you suggest for the Airbus A380?</label>
-                <textarea name="improvements" id="improvements" rows="3" placeholder="Write your suggestions here..."></textarea>
+                <textarea id="improvements" oninput="showTyping('improvementsResponse')"></textarea>
+                <button type="button" onclick="submitImprovements()">Submit</button>
                 <p class="response" id="improvementsResponse"></p>
             </form>
         </div>
     </div>
-
     <script>
-        function checkSeenA380() {
-            let response = document.getElementById("seenResponse");
-            let selected = document.querySelector('input[name="seenA380"]:checked');
-            
-            if (selected) {
-                response.textContent = selected.value === "Yes" 
-                    ? "It is great that you have seen the world's largest passenger aircraft." 
-                    : "No worries! Hope you see one someday.";
-            }
+        function updateSeenResponse(value) {
+            document.getElementById("seenResponse").textContent = value === "Yes" 
+                ? "It is great that you have seen the Airbus A380!" 
+                : "No worries! Hope you see one someday, it's a phenomenal aircraft.";
         }
 
-        document.getElementById("whyFly").addEventListener("input", function() {
-            let response = document.getElementById("whyFlyResponse");
-            response.textContent = this.value.trim() === "" ? "Please share your reason." : "Great reason!";
-        });
+        function showTyping(responseId) {
+            document.getElementById(responseId).textContent = "typing...";
+        }
 
-        document.getElementById("improvements").addEventListener("input", function() {
+        function submitWhyFly() {
+            let response = document.getElementById("whyFlyResponse");
+            let text = document.getElementById("whyFly").value.trim();
+            response.textContent = text ? "Great reason!" : "Please share your reason.";
+        }
+
+        function submitImprovements() {
             let response = document.getElementById("improvementsResponse");
-            response.textContent = this.value.trim() === "" ? "We’d love to hear your suggestions." : "Thank you for your suggestion!";
-        });
+            let text = document.getElementById("improvements").value.trim();
+            response.textContent = text ? "Thank you for your suggestion!" : "We’d love to hear your suggestions.";
+        }
     </script>
 </body>
 </html>
