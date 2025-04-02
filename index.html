@@ -49,7 +49,7 @@
             width: 100%;
             text-align: left;
         }
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 8px;
             margin-bottom: 8px;
@@ -112,9 +112,17 @@
             <h2>Flight Routes of the Airbus A380</h2>
             <form id="flightRoutesForm">
                 <label for="departure">Departure Airport:</label>
-                <input type="text" id="departure" placeholder="Enter departure airport">
+                <select id="departure">
+                    <option value="DXB">Dubai (DXB)</option>
+                    <option value="LHR">London Heathrow (LHR)</option>
+                    <option value="JFK">New York (JFK)</option>
+                </select>
                 <label for="arrival">Arrival Airport:</label>
-                <input type="text" id="arrival" placeholder="Enter arrival airport">
+                <select id="arrival">
+                    <option value="SIN">Singapore (SIN)</option>
+                    <option value="SYD">Sydney (SYD)</option>
+                    <option value="LAX">Los Angeles (LAX)</option>
+                </select>
                 <button type="button" onclick="fetchFlightRoutes()">Find Routes</button>
             </form>
             <p id="routesResult"></p>
@@ -133,26 +141,17 @@
                 <button type="button" onclick="submitWhyFly()">Submit</button>
                 <p class="response" id="whyFlyResponse"></p>
             </form>
+            <form>
+                <label>What features excite you the most about the Airbus A380?</label>
+                <textarea id="exciteFeatures"></textarea>
+                <button type="button">Submit</button>
+            </form>
         </div>
     </div>
-
+    <div class="learn-more">
+        <p><a href="https://www.airbus.com/en/products-services/commercial-aircraft/passenger-aircraft/a380" target="_blank">Learn more about the Airbus A380</a></p>
+    </div>
     <script>
-        function updateSeenResponse(value) {
-            document.getElementById("seenResponse").textContent = value === "Yes" 
-                ? "It is great that you have seen the Airbus A380!" 
-                : "No worries! Hope you see one someday, it's a phenomenal aircraft.";
-        }
-        
-        function showTyping(responseId) {
-            document.getElementById(responseId).textContent = "typing...";
-        }
-
-        function submitWhyFly() {
-            let response = document.getElementById("whyFlyResponse");
-            let text = document.getElementById("whyFly").value.trim();
-            response.textContent = text ? "Great reason!" : "Please share your reason.";
-        }
-
         function fetchFlightRoutes() {
             document.getElementById("routesResult").textContent = "Fetching flight routes...";
             setTimeout(() => {
