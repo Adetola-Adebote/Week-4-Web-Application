@@ -82,11 +82,6 @@
             color: #0066cc;
             text-decoration: underline;
         }
-        #weatherResponse {
-            margin-top: 20px;
-            font-size: 18px;
-            color: darkgreen;
-        }
     </style>
 </head>
 <body>
@@ -114,6 +109,14 @@
             <img src="https://media.istockphoto.com/id/2166281228/photo/luxury-passenger-menu-with-caviar-in-first-class-onboard-of-emirates-airbus-a380-airliner.jpg?s=1024x1024&w=is&k=20&c=QoydXVvAJvwh0RFBqNxBhMVBiC3uIB6GDB8ZL_u2FTg=" alt="Luxury menu in First Class">
         </div>
         <div class="column">
+            <h2>Flight Status Check</h2>
+            <form>
+                <label for="flightNumber">Enter a Flight Number (e.g., BA123):</label>
+                <input type="text" id="flightNumber" placeholder="Flight Number">
+                <button type="button" onclick="getFlightStatus()">Check Status</button>
+                <p class="response" id="flightStatusResponse"></p>
+            </form>
+
             <h2>Share Your Thoughts</h2>
             <form>
                 <label>Have you ever seen an Airbus A380?</label>
@@ -133,11 +136,6 @@
                 <button type="button" onclick="submitImprovements()">Submit</button>
                 <p class="response" id="improvementsResponse"></p>
             </form>
-            <!-- Weather form -->
-            <h2>Check the Weather</h2>
-            <input type="text" id="city" placeholder="Enter city">
-            <button type="button" onclick="getWeather()">Get Weather</button>
-            <div id="weatherResponse"></div>
         </div>
     </div>
 
@@ -147,44 +145,6 @@
     </div>
 
     <script>
-        // Function to fetch weather data from OpenWeatherMap API
-        function getWeather() {
-            var city = document.getElementById("city").value;
-            var apiKey = "878f6bbb60d3c057a1bb2580f40bf947";  // New API Key
-
-            // OpenWeatherMap API URL
-            var url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
-            // Fetch weather data
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    // Check if response has weather data
-                    if (data.cod === 200) {
-                        // Extract weather information
-                        var temperature = data.main.temp;
-                        var description = data.weather[0].description;
-                        var icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
-
-                        // Display weather data
-                        document.getElementById("weatherResponse").innerHTML = `
-                            <h3>Weather in ${city}</h3>
-                            <img src="${icon}" alt="Weather icon">
-                            <p>Temperature: ${temperature}°C</p>
-                            <p>Description: ${description}</p>
-                        `;
-                    } else {
-                        // Handle error (city not found, etc.)
-                        document.getElementById("weatherResponse").innerHTML = `Failed to retrieve weather data for ${city}. Please try again.`;
-                    }
-                })
-                .catch(error => {
-                    // Handle fetch errors (network, API issues, etc.)
-                    document.getElementById("weatherResponse").innerHTML = "Failed to retrieve weather data. Please try again later.";
-                    console.error("Error fetching weather data:", error);  // Log the error to the console
-                });
-        }
-
         function updateSeenResponse(value) {
             document.getElementById("seenResponse").textContent = value === "Yes" 
                 ? "It is great that you have seen the Airbus A380!" 
@@ -205,6 +165,43 @@
             let response = document.getElementById("improvementsResponse");
             let text = document.getElementById("improvements").value.trim();
             response.textContent = text ? "Thank you for your suggestion!" : "We’d love to hear your suggestions.";
+        }
+
+        // Function to fetch flight status using AviationStack API
+        function getFlightStatus() {
+            var flightNumber = document.getElementById("flightNumber").value.trim();
+            var apiKey = "1aa4512585d12e9a481c999bd25bd827"; // Your AviationStack API key
+
+            if (!flightNumber) {
+                document.getElementById("flightStatusResponse").textContent = "Please enter a flight number.";
+                return;
+            }
+
+            var url = `https://api.aviationstack.com/v1/flights?access_key=${apiKey}&flight_iata=${flightNumber}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data && data.data.length > 0) {
+                        var flightData = data.data[0];
+                        var status = flightData.flight_status;
+                        var departure = flightData.departure.airport;
+                        var arrival = flightData.arrival.airport;
+
+                        document.getElementById("flightStatusResponse").innerHTML = `
+                            <h3>Flight Status for ${flightNumber}</h3>
+                            <p>Status: ${status}</p>
+                            <p>Departure Airport: ${departure}</p>
+                            <p>Arrival Airport: ${arrival}</p>
+                        `;
+                    } else {
+                        document.getElementById("flightStatusResponse").textContent = "Flight not found. Please check the flight number and try again.";
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("flightStatusResponse").textContent = "Error fetching flight data.";
+                    console.error("Error:", error);
+                });
         }
     </script>
 </body>
